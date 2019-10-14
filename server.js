@@ -1,14 +1,19 @@
 const express = require('express');
 const cors = require('cors');
-const bodyParser = require('body-parser');
-const bcrypt = require('bcryptjs');
-const mongoose = require('mongoose');
+const helmet = require('helmet');
+//const bodyParser = require('body-parser');
+//const bcrypt = require('bcryptjs');
+const connectDB = require('./config/db');
 
 const app = express();
 
+connectDB();
+
 // Middleware
 app.use(cors());
-app.use(bodyParser.json());
+app.use(helmet());
+app.use(express.json({ extended: false }));
+// app.use(bodyParser.json());
 
 // Endpoints
 app.get('/', (req, res) =>
