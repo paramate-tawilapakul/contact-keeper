@@ -2,6 +2,7 @@ import React, { useReducer } from 'react';
 import axios from 'axios';
 import ContactContext from './contactContext';
 import contactReducer from './contactReducer';
+import jsonHeader from '../../utils/setContentTypeJson';
 
 import {
   GET_CONTACTS,
@@ -41,14 +42,8 @@ const ContactState = props => {
 
   // Add Contact
   const addContact = async contact => {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    };
-
     try {
-      const res = await axios.post('/api/contacts', contact, config);
+      const res = await axios.post('/api/contacts', contact, jsonHeader);
       dispatch({
         type: ADD_CONTACT,
         payload: res.data
@@ -60,17 +55,11 @@ const ContactState = props => {
 
   // Update Contact
   const updateContact = async contact => {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    };
-
     try {
       const res = await axios.put(
         `/api/contacts/${contact._id}`,
         contact,
-        config
+        jsonHeader
       );
       dispatch({
         type: UPDATE_CONTACT,
@@ -87,7 +76,7 @@ const ContactState = props => {
   // Delete Contact
   const deleteContact = async id => {
     try {
-      const res = await axios.delete(`/api/contacts/${id}`);
+      await axios.delete(`/api/contacts/${id}`);
       dispatch({
         type: DELETE_CONTACT,
         payload: id

@@ -1,8 +1,9 @@
-import React, { createContext, useReducer } from 'react';
+import React, { useReducer } from 'react';
 import axios from 'axios';
 import authReducer from './authReducer';
 import AuthContext from './authContext';
 import setAuthToken from '../../utils/setAuthToken';
+import jsonHeader from '../../utils/setContentTypeJson';
 
 import {
   REGISTER_SUCCESS,
@@ -46,14 +47,8 @@ const AuthState = props => {
 
   // Register User
   const register = async formData => {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    };
-
     try {
-      const res = await axios.post('/api/users', formData, config);
+      const res = await axios.post('/api/users', formData, jsonHeader);
       dispatch({
         type: REGISTER_SUCCESS,
         payload: res.data // token
@@ -69,14 +64,8 @@ const AuthState = props => {
 
   // Login User
   const login = async formData => {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    };
-
     try {
-      const res = await axios.post('/api/auth', formData, config);
+      const res = await axios.post('/api/auth', formData, jsonHeader);
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data // token
