@@ -58,7 +58,7 @@ router.post('/', validate, async (req, res) => {
       payload,
       config.get('jwtSecret'),
       {
-        expiresIn: 360000
+        expiresIn: 604800 // 7 days ,86400 = 1 day
       },
       (err, token) => {
         if (err) throw err;
