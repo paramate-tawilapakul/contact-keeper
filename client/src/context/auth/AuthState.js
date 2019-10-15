@@ -4,6 +4,7 @@ import authReducer from './authReducer';
 import AuthContext from './authContext';
 import setAuthToken from '../../utils/setAuthToken';
 import jsonHeader from '../../utils/setContentTypeJson';
+import * as API from '../../api/paths';
 
 import {
   REGISTER_SUCCESS,
@@ -35,7 +36,7 @@ const AuthState = props => {
     }
 
     try {
-      const res = await axios.get('/api/auth');
+      const res = await axios.get(API.AUTH);
       dispatch({
         type: USER_LOADED,
         payload: res.data
@@ -48,7 +49,7 @@ const AuthState = props => {
   // Register User
   const register = async formData => {
     try {
-      const res = await axios.post('/api/users', formData, jsonHeader);
+      const res = await axios.post(API.USERS, formData, jsonHeader);
       dispatch({
         type: REGISTER_SUCCESS,
         payload: res.data // token
@@ -65,7 +66,7 @@ const AuthState = props => {
   // Login User
   const login = async formData => {
     try {
-      const res = await axios.post('/api/auth', formData, jsonHeader);
+      const res = await axios.post(API.AUTH, formData, jsonHeader);
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data // token
